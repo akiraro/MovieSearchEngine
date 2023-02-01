@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-    environment:
-      name: REACT_ENVS
-      
+
     runs-on: ubuntu-latest
 
     permissions:
@@ -40,10 +38,7 @@ jobs:
         cat .env
 
     - name: Build
-      run: |
-        echo $REACT_APP_APIKEY
-        echo $REACT_APP_API_URL
-        npm run build
+      run: npm run build
       env:
         CI: false
         REACT_APP_APIKey: ${{ secrets.REACT_APP_APIKEY }}
