@@ -30,6 +30,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: 'Create env file'
+      run: |
+        touch .env
+        echo REACT_APP_APIKEY=${{ secrets.REACT_APP_APIKEY }} >> .env
+        echo REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} >> .env
+        cat .env
+
     - name: Build
       run: npm run build
       env:
