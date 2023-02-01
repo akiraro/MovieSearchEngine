@@ -18,7 +18,6 @@ const Movie = () => {
 
 
 	useEffect(() => {
-		console.log("useEffect")
 		if (didMountRef.current){
 			setIsLoading(true)
 			MovieService.searchMovies(searchStr)
