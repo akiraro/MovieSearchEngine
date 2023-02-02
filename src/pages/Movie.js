@@ -15,10 +15,8 @@ const Movie = () => {
 	const [searchStr, setSearchStr] = useState("")
 	const didMountRef = useRef(false);
 
-
-
 	useEffect(() => {
-		if (didMountRef.current){
+		if (didMountRef.current) {
 			setIsLoading(true)
 			MovieService.searchMovies(searchStr)
 				.then((response) => {
@@ -26,7 +24,7 @@ const Movie = () => {
 					setIsLoading(false)
 				})
 				.catch((error) => console.error(error))
-		}else{
+		} else {
 			setIsLoading(true)
 			MovieService.getTop250Movies()
 				.then((response) => {
@@ -41,13 +39,12 @@ const Movie = () => {
 
 	const onSearch = (searchText) => {
 		setSearchStr(searchText)
-		setPagination({...pagination, page: 0})
+		setPagination({ ...pagination, page: 0 })
 	}
 
 	return (
 		<MovieContext.Provider value={{ isLoading, movies, pagination, setPagination }}>
 			<Container maxWidth="lg">
-				<Typography variant="h4" sx={{ mt: 3 }}>Movie Search Engine</Typography>
 				<Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
 					<SearchBar
 						placeholder="Search Movie Title"
@@ -55,12 +52,12 @@ const Movie = () => {
 						onSubmit={onSearch}
 						searchOnTextChange={true} />
 				</Box>
-				<Box>					
+				<Box>
 					<Box sx={{ display: 'flex', flexDirection: 'row-reverse', mb: 2 }}>
 						<ToggleButtonGroup
 							exclusive
 							value={viewType}
-							onChange={(e, type)=>setViewType(type)}
+							onChange={(e, type) => setViewType(type)}
 						>
 							<ToggleButton value="grid" aria-label="grid view">
 								<GridViewIcon />
@@ -70,7 +67,7 @@ const Movie = () => {
 							</ToggleButton>
 						</ToggleButtonGroup>
 					</Box>
-					{viewType === 'grid' ? <MovieGrid/>:<MovieList/>}
+					{viewType === 'grid' ? <MovieGrid /> : <MovieList />}
 				</Box>
 			</Container>
 		</MovieContext.Provider>

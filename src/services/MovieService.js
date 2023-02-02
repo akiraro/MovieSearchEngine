@@ -5,7 +5,7 @@ import { httpClient } from "../utils/axiosUtil";
 const searchMovies = async (searchStr) => {
 
 	return new Promise((resolve, reject) => {
-		httpClient.get(MOVIE_SEARCH_ENDPOINT + searchStr)
+		httpClient.get(MOVIE_SEARCH_ENDPOINT + `?title=${searchStr}`)
 			.then((response) => {
 				resolve(response.data)
 			})

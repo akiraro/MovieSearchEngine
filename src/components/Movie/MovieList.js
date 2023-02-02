@@ -1,10 +1,16 @@
 import { MovieContext } from "../../hooks/MovieContext"
-import { useContext } from "react"
+import { useContext, useMemo } from "react"
 import { Paper, Table, TableRow, TableContainer, TableBody, TableCell, TableHead, TablePagination, Box, Typography } from "@mui/material"
 
 
-const MovieList = ({setIsModalOpen}) => {
-	const { isLoading, setMovie, movies, moviesMeta, pagination, setPagination } = useContext(MovieContext)
+const MovieList = () => {
+	const { isLoading, movies, pagination, setPagination } = useContext(MovieContext)
+	const START_INDEX = useMemo(() => {
+		return (pagination.page * pagination.size)
+	}, [pagination])
+	const END_INDEX = useMemo(() => {
+		return (pagination.page * pagination.size) + pagination.size
+	}, [pagination])
 	const rowStyles = {
 		"&:hover": {
 			opacity: 0.7,
@@ -18,11 +24,6 @@ const MovieList = ({setIsModalOpen}) => {
 
 	const handleChangeRowsPerPage = (e) => {
 		setPagination({page: 0, size: parseInt(e.target.value, 10)})
-	}
-
-	const handleOnClick = (movie) => {
-		setMovie(movie)
-		setIsModalOpen(true)
 	}
 
 	if (movies.length === 0 || isLoading) {
@@ -40,20 +41,18 @@ const MovieList = ({setIsModalOpen}) => {
 					<TableHead>
 						<TableRow>
 							<TableCell align="left">Title</TableCell>
-							<TableCell align="left">Original Language</TableCell>
-							<TableCell align="left">Release Date</TableCell>
-							<TableCell align="left">Rating</TableCell>
+							<TableCell align="left">Release Year</TableCell>
+							<TableCell align="left">Description</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{movies.map((row) => (
-							<TableRow key={row.id} sx={rowStyles} onClick={() => handleOnClick(row)}>
+						{movies.slice(START_INDEX, END_INDEX).map((row) => (
+							<TableRow key={row.id} sx={rowStyles}>
 								<TableCell component="th" scope="row">
 									{row.title || 'N/A'}
 								</TableCell>
-								<TableCell align="left">{row.original_language || 'N/A'}</TableCell>
-								<TableCell align="left">{row.release_date || 'N/A'}</TableCell>
-								<TableCell align="left">{row.vote_average || 'N/A'}</TableCell>
+								<TableCell align="left">{row.year || 'N/A'}</TableCell>
+								<TableCell align="left">{row.description || 'N/A'}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
@@ -62,7 +61,7 @@ const MovieList = ({setIsModalOpen}) => {
 			<TablePagination
 				rowsPerPageOptions={[5, 10, 25]}
 				component="div"
-				count={moviesMeta.total}
+				count={movies.length}
 				rowsPerPage={pagination.size}
 				page={pagination.page}
 				onPageChange={handleChangePage}
