@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/MovieSearchEngine/static/css/main.073c9b0a.css",
-    "main.js": "/MovieSearchEngine/static/js/main.7414ebfe.js",
+    "main.js": "/MovieSearchEngine/static/js/main.ab99c9c6.js",
     "index.html": "/MovieSearchEngine/index.html",
     "main.073c9b0a.css.map": "/MovieSearchEngine/static/css/main.073c9b0a.css.map",
-    "main.7414ebfe.js.map": "/MovieSearchEngine/static/js/main.7414ebfe.js.map"
+    "main.ab99c9c6.js.map": "/MovieSearchEngine/static/js/main.ab99c9c6.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.7414ebfe.js"
+    "static/js/main.ab99c9c6.js"
   ]
 }
