@@ -1,6 +1,6 @@
 import GridViewIcon from '@mui/icons-material/GridView'
 import ListIcon from '@mui/icons-material/List'
-import { Box, Container, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
+import { Box, Container, ToggleButton, ToggleButtonGroup } from "@mui/material"
 import { useEffect, useState, useRef } from "react"
 import SearchBar from "../components/Core/SearchBar"
 import MovieGrid from "../components/Movie/MovieGrid"
@@ -18,7 +18,8 @@ const Movie = () => {
 	useEffect(() => {
 		if (didMountRef.current) {
 			setIsLoading(true)
-			MovieService.searchMovies(searchStr)
+			const request = searchStr === '' ? MovieService.getTop250Movies() : MovieService.searchMovies(searchStr)
+			request
 				.then((response) => {
 					setMovies(response.results)
 					setIsLoading(false)
@@ -28,14 +29,15 @@ const Movie = () => {
 			setIsLoading(true)
 			MovieService.getTop250Movies()
 				.then((response) => {
-					setMovies(response.items)
+					setMovies(response.results)
 					setIsLoading(false)
 				})
 				.catch((error) => console.error(error))
 		}
 		didMountRef.current = true
 
-	}, [searchStr]) // Call Movie APIs whenever pagination changes
+	}, // eslint-disable-next-line 
+	[searchStr]) // Call Movie APIs whenever pagination changes
 
 	const onSearch = (searchText) => {
 		setSearchStr(searchText)
@@ -47,7 +49,7 @@ const Movie = () => {
 			<Container maxWidth="lg">
 				<Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
 					<SearchBar
-						placeholder="Search Movie Title"
+						placeholder="Enter a movie name"
 						aria="search movies"
 						onSubmit={onSearch}
 						searchOnTextChange={true} />
