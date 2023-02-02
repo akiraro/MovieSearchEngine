@@ -41,7 +41,8 @@ const MovieList = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell align="left">Title</TableCell>
-							<TableCell align="left">Release Year</TableCell>
+							<TableCell align="left">Rating</TableCell>
+							<TableCell align="left">Release Date</TableCell>
 							<TableCell align="left">Description</TableCell>
 						</TableRow>
 					</TableHead>
@@ -51,8 +52,9 @@ const MovieList = () => {
 								<TableCell component="th" scope="row">
 									{row.title || 'N/A'}
 								</TableCell>
-								<TableCell align="left">{row.year || 'N/A'}</TableCell>
-								<TableCell align="left">{row.description || 'N/A'}</TableCell>
+								<TableCell align="left">{row.vote_average || 'N/A'}</TableCell>
+								<TableCell align="left">{row.release_date || 'N/A'}</TableCell>
+								<TableCell align="left">{row.overview || 'N/A'}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

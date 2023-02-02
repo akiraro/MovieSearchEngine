@@ -7,25 +7,25 @@ const MovieComponent = ({ movie }) => {
 	const [hoverStyle, setHoverStyle] = useState({
 		height: "400px", width: "250px", opacity: 0,
 		position: 'absolute', top: '0px', backgroundColor: 'rgba(17,17,17,.8)', color: '#ffff',
-		transition: '0.3s', borderRadius: '10px'
+		transition: '0.3s', borderRadius: '10px', overflow: 'hidden'
 	})
 	return (
 		<Box sx={{ width: "250px", height: "450px", m: 2, position: 'relative' }}
 			onMouseEnter={() => setHoverStyle({ ...hoverStyle, opacity: 1 })}
 			onMouseLeave={() => setHoverStyle({ ...hoverStyle, opacity: 0 })}
 		>
-			<Box sx={{ width: 'fit-content', position: 'absolute', top: '10px', right: '10px', padding: '5px 10px', backgroundColor: parseInt(movie.imDbRating, 10) >= 5 ? 'green': 'red', borderRadius: '10px', color: '#ffff', fontWeight: 700 }}>{movie.imDbRating || 'N/A'}</Box>
+			<Box sx={{ width: 'fit-content', position: 'absolute', top: '10px', right: '10px', padding: '5px 10px', backgroundColor: parseInt(movie.vote_average, 10) >= 5 ? 'green': 'red', borderRadius: '10px', color: '#ffff', fontWeight: 700 }}>{movie.vote_average || 'N/A'}</Box>
 			<CardMedia
 				component="img"
-				image={movie.image}
+				image={'https://image.tmdb.org/t/p/w500' + movie.poster_path}
 				alt="Movie Banner"
 				sx={{ height: "400px", width: "250px", borderRadius: '10px', boxShadow: '0 0 22px -3px #000' }}
 			/>
 			<Box sx={hoverStyle}>
 				<Box sx={{ p: 3 }}>
 					<Typography sx={{ mb: 3 }} variant="h5">{movie.title}</Typography>
-					<Box sx={{ mb: 3 }}>{movie.plot}</Box>
-					<Box>{movie.runtimeStr}</Box>
+					<Box sx={{ mb: 3 }}>{movie.overview}</Box>
+					<Box>{movie.release_date}</Box>
 				</Box>
 			</Box>
 			<Typography noWrap variant="h5" sx={{ fontWeight: 700 }}>{movie.title}</Typography>
@@ -39,13 +39,6 @@ const MovieGrid = () => {
 	const END_INDEX = useMemo(() => {
 		return (pagination.page * pagination.size) + pagination.size
 	}, [pagination])
-	const gridSX = {
-		position: 'relative',
-		"&:hover": {
-			opacity: 0.7,
-			cursor: 'pointer'
-		}
-	}
 
 	const onLoadMore = () => {
 		setPagination({ ...pagination, page: pagination.page + 1 })
